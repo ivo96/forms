@@ -1,20 +1,30 @@
 import React, { useState, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import SerratedTabs from './SerratedTabs';
-import AddFormButton from './components/buttons/AddFormButton';
-import { FormsContext } from './context/FormsContext';
-import { deleteForm } from './context/FormsActions';
+import SerratedTabs from '../Tabs/SerratedTabs';
+import AddFormButton from '../Buttons/AddFormButton';
+import Form from '../Form/Form';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { v4 as uuidv4 } from 'uuid'; 
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import FormCustom from './components/form/FormCustom';
-import Form1 from './components/form/Form1';
+import { makeStyles } from '@material-ui/core/styles';
+
+import { FormsContext } from '../../context/FormsContext';
+import { deleteForm } from '../../context/FormsActions';
+
+
+const useStyles = makeStyles((theme) => ({
+  centerButtons: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  button: {
+    borderRadius: 0,
+  }
+}))
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -24,17 +34,76 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <>
           {children}
-        </Box>
+        </>
       )}
     </div>
   );
 }
 
-const Demo = () => {
+export default function Demo() {
   const [index, setIndex] = useState(0);
   const { formsState, formsDispatch } = useContext(FormsContext);
+  const classes = useStyles();
+
+  const form1 = {
+    id: uuidv4(),
+    label: 'Form1',
+    formfields: [
+      {
+        id :"phone-number",
+        label: "Phone Number",
+        type: "Number",
+        value: ""
+      }
+    ]
+  };
+  
+  const form2 = {
+    id: uuidv4(),
+    label: 'Form2',
+    formfields: [
+      {
+        id :"first-name",
+        label: "First Name",
+        type: "text",
+        value: ""
+      },
+      {
+        id :"second-name",
+        label: "Second Name",
+        type: "text",
+        value: ""
+      },
+      {
+        id :"third-name",
+        label: "Third Name",
+        type: "text",
+        value: ""
+      }
+    ]
+  };
+  
+  const form3 = {
+    id: uuidv4(),
+    label: 'Form3',
+    formfields: [
+      {
+        id :"email",
+        label: "Email",
+        type: "email",
+        value: ""
+      },
+      {
+        id :"password",
+        label: "Password",
+        type: "password",
+        value: ""
+      },
+    ]
+  };
+
 
   const handleFormDeletion = (formId) => {
     console.log('deleteid ', formId)
@@ -45,56 +114,7 @@ const Demo = () => {
     }
   }
 
-  const form1Schema = {
-    id: uuidv4(),
-    label: 'Form1',
-    formfields: [
-      {
-        id :"id6",
-        label: "Text",
-        type: "text",
-        value: ""
-      }
-    ]
-  };
-
-  const form2Schema = {
-    id: uuidv4(),
-    label: 'Form2',
-    formfields: [
-      {
-        id :"id1",
-        label: "Text",
-        type: "text",
-        value: ""
-      },
-      {
-        id :"id2",
-        label: "Text",
-        type: "text",
-        value: ""
-      },
-      {
-        id :"id3",
-        label: "Text",
-        type: "text",
-        value: ""
-      }
-    ]
-  };
-
-  const form3Schema = {
-    id: uuidv4(),
-    label: 'Form3',
-    formfields: [
-      {
-        id :"id4",
-        label: "Text",
-        type: "text",
-        value: ""
-      },
-    ]
-  };
+  
 
   const handleTabChange = (e, currentIndex) => {
     setIndex(currentIndex);
@@ -105,9 +125,13 @@ const Demo = () => {
   
   return (
     <>
-      <AddFormButton formSchema={form1Schema} buttonName="Form1" />
-      <AddFormButton formSchema={form2Schema} buttonName="Form2" />
-      <AddFormButton formSchema={form3Schema} buttonName="Form3" />
+    <div className={classes.centerButtons}>
+      <ButtonGroup fullWidth size="large" color="primary" aria-label="large outlined primary button group">
+        <AddFormButton className={classes.button} formSchema={form1} buttonName="Form1"  />
+        <AddFormButton className={classes.button} formSchema={form2} buttonName="Form2" />
+        <AddFormButton className={classes.button} formSchema={form3} buttonName="Form3" />
+      </ButtonGroup>
+    </div>
       <AppBar
         position={'static'}
         elevation={0}
@@ -133,19 +157,10 @@ const Demo = () => {
         </Toolbar>
       </AppBar>
       <TabPanel value={index} index={index}>
-          {/* {
-            formsState[index] && 
-              <FormCustom 
-                fieldsInitial={formsState[index].formFields}
-                id={formsState[index].id}
-              />
-          } */}
           { formsState[index] &&
-            <Form1 formId={formsState[index].id} index={index} />
+            <Form formId={formsState[index].id} index={index} />
           }
       </TabPanel>
     </>
   );
 };
-
-export default Demo;

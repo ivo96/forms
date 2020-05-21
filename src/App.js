@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import Dashboard from './Dashboard';
+import Dashboard from './Components/Dashboard/Dashboard';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from './theme';
 import { FormsContextProvider } from './context/FormsContext';
