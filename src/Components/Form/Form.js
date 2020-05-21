@@ -8,10 +8,10 @@ import Box from '@material-ui/core/Box';
 
 
 export default function Form1({formId, index}) {
-    console.log(formId)
     const { formsState, formsDispatch } = useContext(FormsContext);
     const { formfields } = formsState.find(item => item.id === formId);
     const [fields, setFields] = useState(formfields);
+    
     const handleFieldChange = (event) => {
       changeInput(formId, event.target.id, event.target.value, formsDispatch);
     }

@@ -104,34 +104,26 @@ export default function Demo() {
     ]
   };
 
-
   const handleFormDeletion = (formId) => {
-    console.log('deleteid ', formId)
-    console.log('filtered', formsState.filter((form) => form.id !== formId))
     deleteForm(formId, formsDispatch);
     if(formsState.length > index && index > 0) {
       setIndex(index - 1)
     }
   }
 
-  
-
   const handleTabChange = (e, currentIndex) => {
     setIndex(currentIndex);
   }
-
-  console.log('formsState', formsState)
-  console.log('index', index)
   
   return (
     <>
-    <div className={classes.centerButtons}>
-      <ButtonGroup fullWidth size="large" color="primary" aria-label="large outlined primary button group">
-        <AddFormButton className={classes.button} formSchema={form1} buttonName="Form1"  />
-        <AddFormButton className={classes.button} formSchema={form2} buttonName="Form2" />
-        <AddFormButton className={classes.button} formSchema={form3} buttonName="Form3" />
-      </ButtonGroup>
-    </div>
+      <div className={classes.centerButtons}>
+        <ButtonGroup fullWidth size="large" color="primary" aria-label="large outlined primary button group">
+          <AddFormButton className={classes.button} formSchema={form1} buttonName="Form1"  />
+          <AddFormButton className={classes.button} formSchema={form2} buttonName="Form2" />
+          <AddFormButton className={classes.button} formSchema={form3} buttonName="Form3" />
+        </ButtonGroup>
+      </div>
       <AppBar
         position={'static'}
         elevation={0}
